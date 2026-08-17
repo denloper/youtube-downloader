@@ -154,9 +154,9 @@ function showApp() {
   $("#app-root").classList.remove("hidden");
   $("#nav").innerHTML = navHtml();
   const u = state.user;
-  $("#sidebar-user").innerHTML = `
+    $("#sidebar-user").innerHTML = `
     <div class="ava" style="background:${u.color}">${esc(initials(u.full_name))}</div>
-    <div><strong>${esc(u.full_name)}</strong><small>${esc(u.specialty)} · ${esc(roleName(u.role))}</small></div>`;
+    <div><strong>${esc(u.full_name)}</strong><small>${esc(u.specialty || roleName(u.role))}</small></div>`;
 }
 
 function roleName(r) {
