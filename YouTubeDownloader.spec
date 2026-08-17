@@ -11,6 +11,10 @@ for package in ("yt_dlp", "customtkinter", "imageio_ffmpeg"):
     binaries += pkg_binaries
     hiddenimports += pkg_hiddenimports
 
+# Pillow's Tkinter bridge (used by CTkImage/ImageTk) is imported dynamically,
+# so PyInstaller cannot detect it automatically.
+hiddenimports += ["PIL.ImageTk", "PIL._tkinter_finder"]
+
 a = Analysis(
     ["app.py"],
     pathex=[],
