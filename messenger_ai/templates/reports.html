@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Отчёты — Messenger AI</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <p><a href="/">← Назад</a></p>
+    <header class="top">
+      <div>
+        <p class="eyebrow">Сводка для владельца</p>
+        <h1>Отчёты</h1>
+      </div>
+      <form method="post" action="/actions/report">
+        <button class="btn primary" type="submit">Новый отчёт</button>
+      </form>
+    </header>
+    {% for item in reports %}
+    <article class="panel report">
+      <h2>{{ item.title }}</h2>
+      <p class="muted">{% if item.delivered %}Отправлен владельцу{% else %}Сохранён локально{% endif %}</p>
+      <pre>{{ item.body_text }}</pre>
+    </article>
+    {% else %}
+    <p class="muted">Отчётов ещё нет.</p>
+    {% endfor %}
+  </div>
+</body>
+</html>

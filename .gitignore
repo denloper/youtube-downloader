@@ -6,3 +6,6 @@ dist/
 .env
 .venv/
 venv/
+data/
+*.db
+.pytest_cache/

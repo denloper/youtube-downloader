@@ -1,0 +1,112 @@
+:root {
+  color-scheme: dark;
+  --bg: #101218;
+  --panel: #161a22;
+  --line: #262b36;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --accent: #2563eb;
+  --good: #22c55e;
+  --whatsapp: #25d366;
+  --telegram: #229ed9;
+  --instagram: #e1306c;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+a { color: #93c5fd; text-decoration: none; }
+.layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+.top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+h1, h2 { margin: 0 0 8px; }
+.muted { color: var(--muted); }
+.grid { display: grid; gap: 14px; margin-bottom: 14px; }
+.cards { grid-template-columns: repeat(4, 1fr); }
+.two { grid-template-columns: 1fr 1fr; }
+.card, .panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+}
+.card strong { display: block; font-size: 32px; margin-top: 8px; }
+.label { color: var(--muted); font-size: 13px; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; }
+.btn {
+  background: #2a3140;
+  color: var(--text);
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+.btn.primary { background: var(--accent); }
+.channels, .list { list-style: none; padding: 0; margin: 12px 0 0; }
+.channels li, .list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.list a { display: flex; flex-direction: column; color: inherit; width: 100%; }
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #475569;
+  display: inline-block;
+  margin-right: 8px;
+}
+.dot.on { background: var(--good); }
+.demo { display: grid; gap: 10px; margin-top: 12px; }
+label { display: grid; gap: 6px; color: var(--muted); font-size: 13px; }
+input, select {
+  background: #1b1f2a;
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.thread { display: grid; gap: 10px; }
+.bubble {
+  max-width: 720px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #1b1f2a;
+}
+.bubble.outbound { background: #1e3a5f; margin-left: 48px; }
+.bubble.inbound { margin-right: 48px; }
+.meta { display: block; color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  color: #e2e8f0;
+}
+@media (max-width: 800px) {
+  .cards, .two, .top { grid-template-columns: 1fr; display: grid; }
+}

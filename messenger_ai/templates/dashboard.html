@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Messenger AI</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <header class="top">
+      <div>
+        <p class="eyebrow">ИИ-ассистент переписок</p>
+        <h1>{{ company_name }}</h1>
+        <p class="muted">Читает сообщения, отвечает клиентам и присылает вам отчёт.</p>
+      </div>
+      <div class="top-actions">
+        <form method="post" action="/actions/report">
+          <button class="btn primary" type="submit">Сформировать отчёт</button>
+        </form>
+        <form method="post" action="/actions/auto-reply">
+          {% if auto_reply %}
+          <input type="hidden" name="enabled" value="0" />
+          <button class="btn" type="submit">Выключить автоответы</button>
+          {% else %}
+          <input type="hidden" name="enabled" value="1" />
+          <button class="btn" type="submit">Включить автоответы</button>
+          {% endif %}
+        </form>
+      </div>
+    </header>
+
+    <section class="grid cards">
+      <article class="card">
+        <span class="label">Входящие за 24 ч</span>
+        <strong>{{ stats.inbound }}</strong>
+      </article>
+      <article class="card">
+        <span class="label">Ответы ИИ</span>
+        <strong>{{ stats.outbound }}</strong>
+      </article>
+      <article class="card">
+        <span class="label">Диалоги</span>
+        <strong>{{ stats.conversations }}</strong>
+      </article>
+      <article class="card">
+        <span class="label">Нужен человек</span>
+        <strong>{{ stats.escalated }}</strong>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="panel">
+        <h2>Каналы</h2>
+        <ul class="channels">
+          {% for channel in channels %}
+          <li>
+            <span class="dot {% if channel.enabled %}on{% endif %}"></span>
+            <span>{{ channel.label }}</span>
+            <em>{% if channel.enabled %}подключён{% else %}нет ключа{% endif %}</em>
+          </li>
+          {% endfor %}
+          <li>
+            <span class="dot {% if ai_enabled %}on{% endif %}"></span>
+            <span>ИИ-ответы</span>
+            <em>{% if ai_enabled %}OpenAI / совместимый API{% else %}демо-режим без ключа{% endif %}</em>
+          </li>
+          <li>
+            <span class="dot {% if auto_reply %}on{% endif %}"></span>
+            <span>Автоответы</span>
+            <em>{% if auto_reply %}включены{% else %}пауза{% endif %}</em>
+          </li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h2>Проверить без API</h2>
+        <p class="muted">Сообщение попадёт в историю, ИИ ответит, а отчёт это увидит.</p>
+        <form class="demo" method="post" action="/demo/message">
+          <label>
+            Канал
+            <select name="channel">
+              <option value="telegram">Telegram</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="instagram">Instagram</option>
+            </select>
+          </label>
+          <label>
+            Имя клиента
+            <input name="sender_name" value="Анна" />
+          </label>
+          <label>
+            Сообщение
+            <input name="text" placeholder="Когда будет доставка?" required />
+          </label>
+          <button class="btn primary" type="submit">Отправить как входящее</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Последние диалоги</h2>
+        </div>
+        {% if conversations %}
+        <ul class="list">
+          {% for item in conversations %}
+          <li>
+            <a href="/conversations/{{ item.id }}">
+              <strong>{{ item.sender_name or item.chat_id }}</strong>
+              <span>{{ channel_labels.get(item.channel, item.channel) }} · {{ item.status }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="muted">Пока нет переписок. Пришлите демо-сообщение или подключите каналы.</p>
+        {% endif %}
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Отчёты</h2>
+          <a href="/reports">все</a>
+        </div>
+        {% if reports %}
+        <ul class="list">
+          {% for item in reports %}
+          <li>
+            <strong>{{ item.title }}</strong>
+            <span>{% if item.delivered %}отправлен вам{% else %}сохранён{% endif %}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="muted">Нажмите «Сформировать отчёт» — он появится здесь и уйдёт вам в Telegram, если бот настроен.</p>
+        {% endif %}
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Лента сообщений</h2>
+      {% if messages %}
+      <table>
+        <thead>
+          <tr>
+            <th>Канал</th>
+            <th>Направление</th>
+            <th>Кто</th>
+            <th>Текст</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in messages %}
+          <tr>
+            <td>{{ channel_labels.get(item.channel, item.channel) }}</td>
+            <td>{% if item.direction == 'inbound' %}входящее{% else %}ответ ИИ{% endif %}</td>
+            <td>{{ item.sender_name }}</td>
+            <td>{{ item.text }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="muted">Сообщений ещё нет.</p>
+      {% endif %}
+    </section>
+  </div>
+</body>
+</html>
