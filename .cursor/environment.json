@@ -1,0 +1,4 @@
+{
+  "name": "YouTube Downloader",
+  "install": "sudo apt-get update && sudo apt-get install -y --no-install-recommends python3-tk python3-venv ffmpeg && python3 -m venv .venv && .venv/bin/python -m pip install --upgrade pip && .venv/bin/python -m pip install -r requirements.txt"
+}
