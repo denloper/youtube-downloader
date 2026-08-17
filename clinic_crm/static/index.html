@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM клиники — Семейный доктор</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/app.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div id="login-root" class="login-root hidden">
+    <div class="login-art">
+      <div class="login-mark">+</div>
+      <h1>Семейный доктор</h1>
+      <p>CRM клиники: запись, карточки, касса, лаборатория и аналитика в одном рабочем столе.</p>
+      <ul class="login-points">
+        <li>Расписание врачей и живая очередь</li>
+        <li>Электронная медкарта и назначения</li>
+        <li>Касса, склад и отчёты за 30 дней</li>
+      </ul>
+    </div>
+    <form class="login-card" id="login-form">
+      <div class="login-kicker">Вход в рабочее место</div>
+      <h2>Добро пожаловать</h2>
+      <label>Email
+        <input name="email" type="email" autocomplete="username" value="admin@clinic.local" required />
+      </label>
+      <label>Пароль
+        <input name="password" type="password" autocomplete="current-password" value="admin123" required />
+      </label>
+      <button type="submit" class="btn primary full">Войти</button>
+      <p class="login-error" id="login-error"></p>
+      <div class="demo-box">
+        <div>Демо-аккаунты</div>
+        <button type="button" data-demo="admin@clinic.local|admin123">Главный врач</button>
+        <button type="button" data-demo="doctor@clinic.local|doctor123">Кардиолог</button>
+        <button type="button" data-demo="reception@clinic.local|reception123">Регистратура</button>
+        <button type="button" data-demo="nurse@clinic.local|nurse123">Медсестра</button>
+        <button type="button" data-demo="acc@clinic.local|acc123">Касса</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="app-root" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-cross">+</span>
+        <div>
+          <strong>Семейный доктор</strong>
+          <small>CRM клиники</small>
+        </div>
+      </div>
+      <nav id="nav"></nav>
+      <div class="sidebar-user" id="sidebar-user"></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="crumb" id="crumb">Дашборд</div>
+          <h1 id="page-title">Сегодня в клинике</h1>
+        </div>
+        <div class="topbar-actions">
+          <input id="global-search" class="search" placeholder="Найти пациента, карту, телефон…" />
+          <button class="btn ghost" id="btn-new-appt">+ Запись</button>
+          <button class="icon-btn" id="btn-logout" title="Выйти">⎋</button>
+        </div>
+      </header>
+      <section id="view" class="view"></section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card" id="modal-card"></div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
