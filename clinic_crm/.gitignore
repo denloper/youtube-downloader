@@ -3,3 +3,5 @@ data/*.db-journal
 __pycache__/
 *.pyc
 .venv/
+docs/*.webm
+docs/*.mp4
